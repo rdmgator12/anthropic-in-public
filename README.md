@@ -87,6 +87,15 @@ Each entry is a plain object:
 2. Use a **canonical, working URL** (the show's own page or the official upload — not an aggregator).
 3. Reload. The timeline, counts, facets, and search update automatically.
 
+## Quality checks (CI)
+
+Two dependency-free GitHub Actions keep the archive honest:
+
+- **Validate data** (every push / PR) — `scripts/validate-data.mjs` parses `talks.js` + `extras.js` and checks every entry has the required fields, a valid `type`/`category`, a sane date, and a well-formed URL. A malformed entry fails the check instead of silently breaking the live site.
+- **Link check** (weekly) — `scripts/check-links.mjs` verifies every source URL still resolves (YouTube via the oEmbed API; paywall/bot-blocked hosts treated as alive) and opens an issue if any return `404`/`410`.
+
+Run either locally: `node scripts/validate-data.mjs` · `node scripts/check-links.mjs`.
+
 ## Sources & verification
 
 Every entry was compiled from public sources and links to a primary one — a recording, transcript, podcast page, conference listing, or official document. Links were verified to resolve, and ambiguous or low-confidence items were dropped rather than guessed.

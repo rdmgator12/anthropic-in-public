@@ -17,3 +17,6 @@ Icon
 # local env (none used, but guard anyway)
 .env
 .env.local
+
+# Local Netlify folder
+.netlify

@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # The site itself has no dependencies; this only keeps the GitHub Actions
+  # used by the workflows (checkout, setup-node) patched.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci

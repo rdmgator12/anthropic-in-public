@@ -1,0 +1,41 @@
+name: Link check
+
+on:
+  schedule:
+    - cron: "0 13 * * 1" # every Monday 13:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  linkcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check all source links
+        id: check
+        run: node scripts/check-links.mjs
+        continue-on-error: true
+
+      - name: Open or update an issue on dead links
+        if: steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create link-rot --color C84B31 --description "Automated link-rot detection" --force || true
+          existing=$(gh issue list --label link-rot --state open --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file link-report.md
+          else
+            gh issue create --title "🔗 Dead links detected" --label link-rot --body-file link-report.md
+          fi
+
+      - name: Mark run failed if links are dead
+        if: steps.check.outcome == 'failure'
+        run: exit 1
