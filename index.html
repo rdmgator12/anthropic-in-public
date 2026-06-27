@@ -192,6 +192,52 @@
   .chip .ct { color: var(--ink-faint); font-variant-numeric: tabular-nums; font-weight: 600; }
   .chip[aria-pressed="true"] .ct { color: color-mix(in oklab, var(--paper) 70%, transparent); }
 
+  /* ---------- featured ---------- */
+  .featured { margin-top: var(--space-2xl); }
+  .featured.hide { display: none; }
+  .featured__head {
+    display: flex; align-items: center; gap: var(--space-sm);
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 600; padding-bottom: var(--space-md);
+  }
+  .featured__head::after { content: ""; flex: 1; height: 1px; background: var(--line-strong); }
+  .featured__head .star { color: var(--accent); font-size: 0.9rem; letter-spacing: 0; }
+  .featured__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
+
+  .fcard {
+    display: flex; flex-direction: column; overflow: hidden;
+    background: var(--surface); border: 1px solid var(--line-strong); border-radius: 4px;
+    transition: border-color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+  }
+  .fcard:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 14px 30px -18px oklch(0.4 0.05 60 / 0.45); }
+  .fcard__thumb { position: relative; aspect-ratio: 16 / 9; background: var(--paper-sunk); overflow: hidden; }
+  .fcard__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+  .fcard:hover .fcard__thumb img { transform: scale(1.035); }
+  .fcard__play { position: absolute; inset: 0; display: grid; place-items: center; }
+  .fcard__play span {
+    width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center;
+    background: color-mix(in oklab, var(--ink) 76%, transparent); backdrop-filter: blur(2px);
+    transition: background 0.16s ease, transform 0.16s ease;
+  }
+  .fcard:hover .fcard__play span { background: var(--accent); transform: scale(1.07); }
+  .fcard__play svg { fill: var(--paper); margin-left: 3px; }
+  .fcard__body { padding: var(--space-md) var(--space-md) var(--space-lg); display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .fcard__title {
+    font-family: var(--serif); font-weight: 500; font-size: 1.24rem; line-height: 1.24;
+    letter-spacing: -0.006em; color: var(--ink); text-wrap: balance; transition: color 0.16s ease;
+  }
+  .fcard:hover .fcard__title { color: var(--accent-deep); }
+  .fcard__desc { font-size: 0.88rem; line-height: 1.5; color: var(--ink-soft); }
+  .fcard__meta { margin-top: auto; padding-top: 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 7px 10px; }
+  .fcard__speaker { font-size: 0.8rem; font-weight: 700; color: var(--ink); }
+  .fcard__venue { font-size: 0.8rem; color: var(--ink-soft); }
+  .fcard__date { font-size: 0.78rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+  .fcard__type {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .fcard__type .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dot, var(--ink-faint)); }
+
   /* ---------- timeline ---------- */
   main { padding-top: var(--space-2xl); padding-bottom: var(--space-4xl); }
 
@@ -286,6 +332,7 @@
   @media (max-width: 760px) {
     :root { --bar-h: 150px; }
     .rule-top { font-size: 0.64rem; letter-spacing: 0.12em; }
+    .featured__grid { grid-template-columns: 1fr; }
     .yearblock { grid-template-columns: 1fr; gap: var(--space-xs); }
     .yearblock__sticky { position: static; flex-direction: row; align-items: baseline; gap: var(--space-sm); padding-bottom: var(--space-2xs); }
     .yearblock__num { font-size: 2rem; }
@@ -341,6 +388,7 @@
   </div>
 
   <main class="wrap">
+    <div class="featured hide" id="featured"></div>
     <div id="timeline"></div>
     <div class="empty" id="empty">
       <h2>Nothing in the archive matches that.</h2>
@@ -504,7 +552,48 @@
         + `</a>`;
     }
 
+    // ---- featured band (curated videos, talk view, unfiltered only) ----
+    const ytid = url => (url.match(/[?&]v=([\w-]{11})/) || url.match(/youtu\.be\/([\w-]{11})/) || url.match(/\/live\/([\w-]{11})/) || [])[1];
+    const FEATURED = DATA.filter(t => t.featured)
+      .sort((a, b) => a.sortKey < b.sortKey ? 1 : a.sortKey > b.sortKey ? -1 : 0);
+
+    function featuredCardHTML(t) {
+      const id = ytid(t.url);
+      const img = id
+        ? `<img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/mqdefault.jpg'">`
+        : "";
+      return `<a class="fcard" href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">`
+        + `<div class="fcard__thumb">${img}`
+          + `<div class="fcard__play"><span><svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>`
+        + `</div>`
+        + `<div class="fcard__body">`
+          + `<h3 class="fcard__title">${esc(t.title)}</h3>`
+          + (t.description ? `<p class="fcard__desc">${esc(t.description)}</p>` : "")
+          + `<div class="fcard__meta">`
+            + `<span class="fcard__speaker">${esc(t.speaker)}</span>`
+            + `<span class="talk__sep"></span>`
+            + `<span class="fcard__venue">${esc(t.venue)}</span>`
+            + `<span class="talk__sep"></span>`
+            + `<span class="fcard__date">${esc(t.dateLabel)}</span>`
+            + `<span class="fcard__type" style="--dot:var(--t-${esc(t.type)})"><span class="dot"></span>${esc(t.type)}</span>`
+          + `</div>`
+        + `</div>`
+      + `</a>`;
+    }
+
+    function renderFeatured() {
+      const el = $("#featured");
+      const show = FEATURED.length && state.view === "talk"
+        && state.q === "" && state.type === "all" && state.speaker === "all";
+      el.classList.toggle("hide", !show);
+      el.innerHTML = show
+        ? `<div class="featured__head"><span class="star">★</span> Featured</div>`
+          + `<div class="featured__grid">${FEATURED.map(featuredCardHTML).join("")}</div>`
+        : "";
+    }
+
     function render() {
+      renderFeatured();
       const data = filtered();
       $("#empty").classList.toggle("show", data.length === 0);
       const tl = $("#timeline");
