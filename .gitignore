@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# logs / local server noise
+*.log
+.cache/
+
+# local env (none used, but guard anyway)
+.env
+.env.local

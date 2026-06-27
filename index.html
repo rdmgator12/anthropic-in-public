@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anthropic in Public — A Talks Archive</title>
+<meta name="description" content="An independent, chronological archive of public talks, lectures, testimony, and conversations by Anthropic team members, from the company's founding in 2021 to today.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* warm paper palette, neutrals tinted toward the brand hue */
+    --paper:        oklch(0.962 0.009 78);
+    --paper-sunk:   oklch(0.945 0.011 76);
+    --surface:      oklch(0.984 0.006 82);
+    --ink:          oklch(0.245 0.013 58);
+    --ink-soft:     oklch(0.445 0.013 60);
+    --ink-faint:    oklch(0.575 0.011 62);
+    --line:         oklch(0.885 0.012 74);
+    --line-strong:  oklch(0.820 0.015 72);
+    --accent:       oklch(0.575 0.132 42);
+    --accent-deep:  oklch(0.470 0.118 40);
+    --accent-tint:  oklch(0.935 0.028 56);
+
+    /* talk-type marks — muted, all in one register */
+    --t-keynote:   oklch(0.60 0.140 42);
+    --t-podcast:   oklch(0.56 0.088 352);
+    --t-interview: oklch(0.55 0.062 250);
+    --t-panel:     oklch(0.56 0.070 196);
+    --t-lecture:   oklch(0.56 0.076 150);
+    --t-testimony: oklch(0.58 0.100 80);
+    --t-fireside:  oklch(0.64 0.118 56);
+    --t-workshop:  oklch(0.52 0.090 300);
+    --t-essay:     oklch(0.46 0.022 60);
+    --t-demo:      oklch(0.55 0.070 220);
+    --t-event:     oklch(0.55 0.095 35);
+    --t-webinar:   oklch(0.52 0.060 265);
+    --t-explainer: oklch(0.56 0.080 165);
+
+    --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px;
+    --space-lg: 24px; --space-xl: 32px; --space-2xl: 48px; --space-3xl: 64px; --space-4xl: 96px;
+
+    --bar-h: 168px;
+    --serif: "Spectral", Georgia, serif;
+    --sans: "Hanken Grotesk", -apple-system, system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(120% 80% at 85% -10%, oklch(0.97 0.024 62 / 0.7), transparent 60%),
+      radial-gradient(90% 60% at 0% 0%, oklch(0.965 0.016 90 / 0.6), transparent 55%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+  }
+
+  ::selection { background: var(--accent-tint); color: var(--accent-deep); }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { width: min(1140px, 92vw); margin-inline: auto; }
+
+  /* ---------- masthead ---------- */
+  .masthead { padding-top: var(--space-2xl); padding-bottom: var(--space-xl); }
+
+  .rule-top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-block: 1px solid var(--line-strong);
+    padding-block: var(--space-xs);
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 600;
+  }
+  .rule-top .dotmark { color: var(--accent); }
+
+  .lede { margin-top: var(--space-2xl); display: grid; gap: var(--space-lg); }
+  .title {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(2.9rem, 7.6vw, 6.2rem);
+    line-height: 0.96; letter-spacing: -0.018em;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .title em { font-style: italic; font-weight: 400; color: var(--accent-deep); }
+  .dek {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(1.12rem, 1.9vw, 1.5rem);
+    line-height: 1.46; color: var(--ink-soft); max-width: 62ch;
+  }
+
+  .stats {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: var(--space-xs) var(--space-lg);
+    margin-top: var(--space-xs);
+  }
+  .stat { display: flex; align-items: baseline; gap: 0.5ch; }
+  .stat b {
+    font-family: var(--serif); font-weight: 600; font-size: 1.35rem; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat span { font-size: 0.74rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
+
+  /* ---------- view tabs ---------- */
+  .views {
+    display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-lg);
+    padding-top: var(--space-md); border-bottom: 1px solid var(--line);
+  }
+  .view {
+    font-family: var(--sans); font-size: 0.96rem; font-weight: 600; letter-spacing: -0.005em;
+    color: var(--ink-faint); background: none; border: none; cursor: pointer;
+    padding: 0 1px var(--space-sm); margin-bottom: -1px;
+    border-bottom: 2px solid transparent; display: inline-flex; align-items: baseline; gap: 7px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .view:hover { color: var(--ink-soft); }
+  .view .vct {
+    font-size: 0.72rem; font-weight: 700; color: var(--ink-faint);
+    font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+  }
+  .view[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  .view[aria-pressed="true"] .vct { color: var(--accent-deep); }
+
+  /* ---------- toolbar ---------- */
+  .toolbar {
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in oklab, var(--paper) 90%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    margin-top: var(--space-xl);
+  }
+  .selectwrap.hide, .chips.hide { display: none; }
+  .toolbar__inner {
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm);
+    padding-block: var(--space-sm);
+  }
+  .search {
+    position: relative; flex: 1 1 260px; min-width: 0;
+  }
+  .search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--ink-faint); pointer-events: none; }
+  .search input {
+    width: 100%; font-family: var(--sans); font-size: 0.95rem; color: var(--ink);
+    padding: 10px 14px 10px 36px;
+    background: var(--surface); border: 1px solid var(--line-strong); border-radius: 2px;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .search input::placeholder { color: var(--ink-faint); }
+  .search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
+
+  .selectwrap { position: relative; flex: 0 0 auto; }
+  .selectwrap::after {
+    content: ""; position: absolute; right: 12px; top: 50%;
+    width: 7px; height: 7px; border-right: 1.5px solid var(--ink-faint); border-bottom: 1.5px solid var(--ink-faint);
+    transform: translateY(-65%) rotate(45deg); pointer-events: none;
+  }
+  select {
+    appearance: none; font-family: var(--sans); font-size: 0.9rem; font-weight: 500; color: var(--ink);
+    padding: 10px 34px 10px 14px; background: var(--surface);
+    border: 1px solid var(--line-strong); border-radius: 2px; cursor: pointer; max-width: 240px;
+  }
+  select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
+
+  .sort {
+    display: inline-flex; border: 1px solid var(--line-strong); border-radius: 2px; overflow: hidden; background: var(--surface);
+  }
+  .sort button {
+    font-family: var(--sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em;
+    color: var(--ink-soft); background: transparent; border: none; padding: 10px 14px; cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+  }
+  .sort button + button { border-left: 1px solid var(--line); }
+  .sort button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: var(--space-sm); }
+  .chip {
+    font-family: var(--sans); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.02em;
+    color: var(--ink-soft); background: transparent;
+    border: 1px solid var(--line-strong); border-radius: 100px;
+    padding: 5px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .chip:hover { border-color: var(--ink-faint); color: var(--ink); }
+  .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dot, var(--ink-faint)); }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .chip[aria-pressed="true"] .dot { box-shadow: 0 0 0 1.5px color-mix(in oklab, var(--paper) 55%, transparent); }
+  .chip .ct { color: var(--ink-faint); font-variant-numeric: tabular-nums; font-weight: 600; }
+  .chip[aria-pressed="true"] .ct { color: color-mix(in oklab, var(--paper) 70%, transparent); }
+
+  /* ---------- timeline ---------- */
+  main { padding-top: var(--space-2xl); padding-bottom: var(--space-4xl); }
+
+  .yearblock { display: grid; grid-template-columns: 132px 1fr; gap: var(--space-lg); }
+  .yearblock + .yearblock { margin-top: var(--space-xl); }
+  .yearblock__rail { position: relative; }
+  .yearblock__sticky {
+    position: sticky; top: calc(var(--bar-h) + 8px);
+    display: flex; flex-direction: column; gap: 2px; padding-top: 4px;
+  }
+  .yearblock__num {
+    font-family: var(--serif); font-weight: 600; font-size: clamp(2.2rem, 4.4vw, 3rem);
+    line-height: 1; color: var(--ink); letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+  }
+  .yearblock:first-of-type .yearblock__num { color: var(--accent-deep); }
+  .yearblock__tag { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
+
+  .yearblock__list { border-top: 1px solid var(--line-strong); }
+
+  .talk {
+    display: grid;
+    grid-template-columns: 96px 1fr auto;
+    align-items: start; gap: var(--space-md);
+    padding: var(--space-lg) var(--space-xs) var(--space-lg) 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: background 0.16s ease;
+  }
+  .talk::before {
+    content: ""; position: absolute; left: -16px; right: -16px; top: 0; bottom: -1px;
+    background: var(--accent-tint); opacity: 0; border-radius: 3px;
+    transition: opacity 0.16s ease; z-index: -1;
+  }
+  .talk:hover::before { opacity: 0.5; }
+
+  .talk__date {
+    font-size: 0.78rem; font-weight: 600; color: var(--ink-faint);
+    letter-spacing: 0.02em; font-variant-numeric: tabular-nums; padding-top: 0.45em; white-space: nowrap;
+  }
+
+  .talk__title {
+    font-family: var(--serif); font-weight: 500; font-size: 1.36rem; line-height: 1.22;
+    letter-spacing: -0.006em; color: var(--ink); transition: color 0.16s ease;
+    text-wrap: balance;
+  }
+  .talk:hover .talk__title { color: var(--accent-deep); }
+  .talk__desc { margin-top: 7px; font-size: 0.92rem; line-height: 1.5; color: var(--ink-soft); max-width: 68ch; }
+  .talk__meta { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 7px 12px; }
+  .talk__speaker { font-size: 0.82rem; font-weight: 700; color: var(--ink); letter-spacing: 0.005em; }
+  .talk__role { font-size: 0.78rem; color: var(--ink-faint); }
+  .talk__venue { font-size: 0.82rem; color: var(--ink-soft); }
+  .talk__sep { width: 3px; height: 3px; border-radius: 50%; background: var(--line-strong); flex: 0 0 auto; }
+
+  .talk__type {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-soft); padding-top: 0.6em; white-space: nowrap;
+  }
+  .talk__type .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--dot, var(--ink-faint)); flex: 0 0 auto; }
+  .talk__arrow {
+    align-self: center; color: var(--ink-faint); flex: 0 0 auto;
+    transform: translate(-2px, 2px); opacity: 0; transition: opacity 0.16s ease, transform 0.16s ease;
+  }
+  .talk:hover .talk__arrow { opacity: 1; transform: translate(0,0); color: var(--accent); }
+
+  /* staggered first-paint reveal */
+  .stagger { opacity: 0; transform: translateY(8px); animation: rise 0.5s cubic-bezier(0.16,1,0.3,1) forwards; animation-delay: calc(var(--i) * 26ms); }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ---------- empty state ---------- */
+  .empty { display: none; padding: var(--space-4xl) 0; text-align: center; }
+  .empty.show { display: block; }
+  .empty h2 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: 1.8rem; color: var(--ink); }
+  .empty p { margin-top: var(--space-sm); color: var(--ink-soft); }
+  .empty button {
+    margin-top: var(--space-lg); font-family: var(--sans); font-weight: 600; font-size: 0.85rem;
+    color: var(--accent-deep); background: var(--accent-tint); border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+    border-radius: 2px; padding: 9px 18px; cursor: pointer;
+  }
+  .empty button:hover { background: color-mix(in oklab, var(--accent-tint) 80%, var(--accent) 12%); }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line-strong); padding-block: var(--space-2xl) var(--space-3xl); }
+  .foot { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-2xl); }
+  .foot h3 { font-family: var(--serif); font-weight: 500; font-size: 1.15rem; margin-bottom: var(--space-sm); }
+  .foot p { font-size: 0.86rem; line-height: 1.6; color: var(--ink-soft); max-width: 56ch; }
+  .foot a.inline { color: var(--accent-deep); border-bottom: 1px solid color-mix(in oklab, var(--accent) 40%, transparent); }
+  .foot a.inline:hover { background: var(--accent-tint); }
+  .foot small { display: block; margin-top: var(--space-lg); font-size: 0.74rem; color: var(--ink-faint); letter-spacing: 0.02em; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 760px) {
+    :root { --bar-h: 150px; }
+    .rule-top { font-size: 0.64rem; letter-spacing: 0.12em; }
+    .yearblock { grid-template-columns: 1fr; gap: var(--space-xs); }
+    .yearblock__sticky { position: static; flex-direction: row; align-items: baseline; gap: var(--space-sm); padding-bottom: var(--space-2xs); }
+    .yearblock__num { font-size: 2rem; }
+    .talk { grid-template-columns: 1fr; gap: 6px; padding-block: var(--space-md); }
+    .talk__date { order: -1; padding-top: 0; }
+    .talk__arrow { display: none; }
+    .talk__type { padding-top: 4px; }
+    .foot { grid-template-columns: 1fr; gap: var(--space-xl); }
+    select { max-width: 160px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .stagger { animation: none; opacity: 1; transform: none; }
+    * { transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="wrap">
+      <div class="rule-top">
+        <span>An Independent Archive <span class="dotmark">·</span> Compiled from public sources</span>
+        <span id="rt-span">2021 — 2026</span>
+      </div>
+      <div class="lede">
+        <h1 class="title">Anthropic, <em>in public.</em></h1>
+        <p class="dek">Every talk, lecture, podcast, panel, and piece of testimony the people building Anthropic have given in the open — gathered from the founding in 2021 to today, and indexed in one place.</p>
+        <div class="stats" id="stats" aria-label="archive summary"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="views" id="views" role="tablist" aria-label="Archive section"></div>
+      <div class="toolbar__inner">
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Search talks, people, venues…" autocomplete="off" aria-label="Search the archive">
+        </label>
+        <div class="selectwrap" id="speakerwrap">
+          <select id="speaker" aria-label="Filter by speaker"></select>
+        </div>
+        <div class="sort" role="group" aria-label="Sort order">
+          <button id="sort-new" aria-pressed="true">Newest</button>
+          <button id="sort-old" aria-pressed="false">Oldest</button>
+        </div>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filter by type"></div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div id="timeline"></div>
+    <div class="empty" id="empty">
+      <h2>Nothing in the archive matches that.</h2>
+      <p>Try a different name, venue, or talk type.</p>
+      <button id="reset">Clear filters</button>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <h3>About this archive</h3>
+        <p>This is an unofficial, independently compiled index of public appearances by Anthropic team members. Every entry links to its original source — a recording, transcript, or event page. It is best-effort and certainly incomplete: appearances are added as they're found, and corrections are welcome.</p>
+        <p style="margin-top:16px">Not affiliated with or endorsed by Anthropic. All talks are the work of their respective speakers and hosts.</p>
+      </div>
+      <div>
+        <h3>Spot a gap?</h3>
+        <p>Missing a talk, a wrong date, a speaker who moved on? The data lives in <code style="font-family:var(--sans);font-weight:700;color:var(--ink)">talks.js</code> (talks) and <code style="font-family:var(--sans);font-weight:700;color:var(--ink)">extras.js</code> (events, webinars, explainers) — add a row and it appears on its timeline.</p>
+        <small id="buildline">Built June 2026 · <span id="foot-count"></span></small>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data/talks.js"></script>
+  <script src="data/extras.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    const TYPE_ORDER = ["keynote","podcast","interview","panel","lecture","testimony","fireside","workshop","essay","demo","event","webinar","explainer"];
+    const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    // merge: talks default to category "talk", then add events/webinars/explainers
+    TALKS.forEach(t => { if (!t.category) t.category = "talk"; });
+    const DATA = TALKS.concat(typeof EXTRAS !== "undefined" ? EXTRAS : []);
+
+    // normalize + enrich
+    DATA.forEach(t => {
+      t.year = parseInt(t.date.slice(0, 4), 10);
+      const parts = t.date.split("-");
+      const mm = parts[1] ? String(parts[1]).padStart(2, "0") : "00";
+      const dd = parts[2] ? String(parts[2]).padStart(2, "0") : "00";
+      t.sortKey = `${t.year}-${mm}-${dd}`;
+      t.dateLabel = parts[1] ? (parts[2]
+        ? `${MONTHS[parseInt(parts[1],10)-1]} ${parseInt(parts[2],10)}, ${t.year}`
+        : `${MONTHS[parseInt(parts[1],10)-1]} ${t.year}`)
+        : `${t.year}`;
+      t._hay = `${t.title} ${t.speaker} ${(t.people||[]).join(" ")} ${t.venue} ${t.type} ${t.description||""}`.toLowerCase();
+    });
+
+    const VIEWS = {
+      talk:      { tab: "Talks", cats: ["talk"], noun: "talk", facet: true },
+      eventweb:  { tab: "Events & Webinars", cats: ["event","webinar"], noun: "session", facet: false },
+      explainer: { tab: "Explainers", cats: ["explainer"], noun: "video", facet: false }
+    };
+    const VIEW_ORDER = ["talk","eventweb","explainer"];
+
+    const state = { view: "talk", q: "", type: "all", speaker: "all", order: "new", firstPaint: true };
+
+    const $ = sel => document.querySelector(sel);
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+    const viewData = () => DATA.filter(t => VIEWS[state.view].cats.includes(t.category));
+
+    // ---- view tabs ----
+    $("#views").innerHTML = VIEW_ORDER.map(v => {
+      const n = DATA.filter(t => VIEWS[v].cats.includes(t.category)).length;
+      return `<button class="view" data-view="${v}" role="tab" aria-pressed="${v === state.view}">`
+        + `${VIEWS[v].tab}<span class="vct">${n}</span></button>`;
+    }).join("");
+    $("#views").addEventListener("click", e => {
+      const b = e.target.closest(".view"); if (!b || b.dataset.view === state.view) return;
+      state.view = b.dataset.view; state.q = ""; state.type = "all"; state.speaker = "all"; state.firstPaint = true;
+      $("#q").value = "";
+      document.querySelectorAll("#views .view").forEach(x => x.setAttribute("aria-pressed", x.dataset.view === state.view));
+      buildStats(); buildSpeakers(); buildChips();
+      window.scrollTo({ top: 0 });
+      render();
+    });
+
+    // ---- hero stats (scoped to active view) ----
+    function buildStats() {
+      const d = viewData();
+      const yrs = d.map(t => t.year);
+      const span = yrs.length ? `${Math.min(...yrs)}–${Math.max(...yrs)}` : "—";
+      let rows;
+      if (state.view === "talk") {
+        const people = new Set(); d.forEach(t => (t.people||[t.speaker]).forEach(p => people.add(p)));
+        const venues = new Set(d.map(t => t.venue));
+        rows = [[d.length, "talks"], [people.size, "voices"], [venues.size, "venues"], [span, "years"]];
+      } else if (state.view === "eventweb") {
+        rows = [[d.length, "sessions"], [span, "years"]];
+      } else {
+        rows = [[d.length, "videos"], [span, "years"]];
+      }
+      $("#stats").innerHTML = rows.map(([n, l]) => `<span class="stat"><b>${n}</b><span>${l}</span></span>`).join("");
+    }
+
+    // ---- speaker facet (talk view only) ----
+    function buildSpeakers() {
+      const wrap = $("#speakerwrap");
+      if (!VIEWS[state.view].facet) { wrap.classList.add("hide"); return; }
+      wrap.classList.remove("hide");
+      const count = {};
+      viewData().forEach(t => (t.people||[t.speaker]).forEach(p => { count[p] = (count[p]||0) + 1; }));
+      const names = Object.keys(count).sort((a, b) => count[b] - count[a] || a.localeCompare(b));
+      $("#speaker").innerHTML = `<option value="all">All speakers (${names.length})</option>` +
+        names.map(n => `<option value="${esc(n)}">${esc(n)} · ${count[n]}</option>`).join("");
+    }
+
+    // ---- type chips (scoped to active view) ----
+    function buildChips() {
+      const d = viewData(), counts = {};
+      d.forEach(t => counts[t.type] = (counts[t.type]||0)+1);
+      const present = Object.keys(counts).sort((a, b) => TYPE_ORDER.indexOf(a) - TYPE_ORDER.indexOf(b));
+      const chips = $("#chips");
+      if (present.length <= 1) { chips.classList.add("hide"); chips.innerHTML = ""; return; }
+      chips.classList.remove("hide");
+      chips.innerHTML = `<button class="chip" data-type="all" aria-pressed="true">All <span class="ct">${d.length}</span></button>`
+        + present.map(t =>
+          `<button class="chip" data-type="${esc(t)}" aria-pressed="false" style="--dot:var(--t-${esc(t)})">`
+          + `<span class="dot"></span>${esc(t)}<span class="ct">${counts[t]}</span></button>`).join("");
+    }
+    $("#chips").addEventListener("click", e => {
+      const b = e.target.closest(".chip"); if (!b) return;
+      state.type = b.dataset.type; state.firstPaint = false;
+      document.querySelectorAll("#chips .chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+      render();
+    });
+
+    // ---- filtering ----
+    function filtered() {
+      const out = viewData().filter(t => {
+        if (state.type !== "all" && t.type !== state.type) return false;
+        if (state.speaker !== "all" && !(t.people||[t.speaker]).includes(state.speaker)) return false;
+        if (state.q && !t._hay.includes(state.q)) return false;
+        return true;
+      });
+      const dir = state.order === "new" ? -1 : 1;
+      out.sort((a, b) => a.sortKey > b.sortKey ? dir : a.sortKey < b.sortKey ? -dir : 0);
+      return out;
+    }
+
+    function talkHTML(t, i) {
+      const stag = state.firstPaint ? `stagger" style="--i:${Math.min(i, 28)}` : "";
+      const named = t.speaker && t.speaker !== "Anthropic";
+      let meta = "";
+      if (named) {
+        meta += `<span class="talk__speaker">${esc(t.speaker)}</span>`;
+        if (t.role) meta += `<span class="talk__role">${esc(t.role)}</span>`;
+        meta += `<span class="talk__sep"></span>`;
+      }
+      meta += `<span class="talk__venue">${esc(t.venue)}</span>`;
+      return `<a class="talk ${stag}" href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">`
+        + `<div class="talk__date">${esc(t.dateLabel)}</div>`
+        + `<div class="talk__body">`
+          + `<h3 class="talk__title">${esc(t.title)}</h3>`
+          + (t.description ? `<p class="talk__desc">${esc(t.description)}</p>` : "")
+          + `<div class="talk__meta">${meta}</div>`
+        + `</div>`
+        + `<div class="talk__type" style="--dot:var(--t-${esc(t.type)})"><span class="dot"></span>${esc(t.type)}</div>`
+        + `<svg class="talk__arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>`
+        + `</a>`;
+    }
+
+    function render() {
+      const data = filtered();
+      $("#empty").classList.toggle("show", data.length === 0);
+      const tl = $("#timeline");
+      if (!data.length) { tl.innerHTML = ""; return; }
+      const noun = VIEWS[state.view].noun;
+      const years = [], byYear = {};
+      data.forEach(t => { if (!byYear[t.year]) { byYear[t.year] = []; years.push(t.year); } byYear[t.year].push(t); });
+      let gi = 0;
+      tl.innerHTML = years.map(y => {
+        const list = byYear[y], n = list.length;
+        const rows = list.map(t => talkHTML(t, gi++)).join("");
+        return `<section class="yearblock" id="y-${y}">`
+          + `<div class="yearblock__rail"><div class="yearblock__sticky">`
+            + `<div class="yearblock__num">${y}</div>`
+            + `<div class="yearblock__tag">${n} ${noun}${n === 1 ? "" : "s"}</div>`
+          + `</div></div>`
+          + `<div class="yearblock__list">${rows}</div>`
+        + `</section>`;
+      }).join("");
+      state.firstPaint = false;
+    }
+
+    // ---- wire controls ----
+    let qt;
+    $("#q").addEventListener("input", e => {
+      clearTimeout(qt);
+      qt = setTimeout(() => { state.q = e.target.value.trim().toLowerCase(); state.firstPaint = false; render(); }, 120);
+    });
+    $("#speaker").addEventListener("change", e => { state.speaker = e.target.value; state.firstPaint = false; render(); });
+    $("#sort-new").addEventListener("click", () => setOrder("new"));
+    $("#sort-old").addEventListener("click", () => setOrder("old"));
+    function setOrder(o) {
+      state.order = o; state.firstPaint = false;
+      $("#sort-new").setAttribute("aria-pressed", o === "new");
+      $("#sort-old").setAttribute("aria-pressed", o === "old");
+      render();
+    }
+    $("#reset").addEventListener("click", () => {
+      state.q = ""; state.type = "all"; state.speaker = "all"; state.firstPaint = false;
+      $("#q").value = ""; if (VIEWS[state.view].facet) $("#speaker").value = "all";
+      document.querySelectorAll("#chips .chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.type === "all"));
+      render();
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key === "/" && document.activeElement !== $("#q")) { e.preventDefault(); $("#q").focus(); }
+      if (e.key === "Escape" && document.activeElement === $("#q")) { $("#q").blur(); }
+    });
+
+    // ---- init ----
+    $("#foot-count").textContent = `${DATA.length} entries · ${TALKS.length} talks`;
+    buildStats(); buildSpeakers(); buildChips();
+    render();
+  })();
+  </script>
+</body>
+</html>

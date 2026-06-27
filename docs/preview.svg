@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" role="img" aria-label="Anthropic in Public — a talks archive">
+  <defs>
+    <linearGradient id="warm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f3ec"/>
+      <stop offset="1" stop-color="#efe9df"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#warm)"/>
+  <rect width="1280" height="640" fill="#fbeede" opacity="0.25"/>
+
+  <!-- top rule -->
+  <line x1="96" y1="92" x2="1184" y2="92" stroke="#cfc7b8" stroke-width="1"/>
+  <line x1="96" y1="124" x2="1184" y2="124" stroke="#cfc7b8" stroke-width="1"/>
+  <text x="96" y="114" font-family="Helvetica, Arial, sans-serif" font-size="14" letter-spacing="2.4" fill="#8c8475" font-weight="600">AN INDEPENDENT ARCHIVE &#183; COMPILED FROM PUBLIC SOURCES</text>
+  <text x="1184" y="114" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="14" letter-spacing="2.4" fill="#8c8475" font-weight="600">2021 &#8212; 2026</text>
+
+  <!-- headline -->
+  <text x="92" y="290" font-family="Georgia, 'Times New Roman', serif" font-size="120" fill="#2f2a24" font-weight="500">Anthropic,<tspan font-style="italic" fill="#974a30"> in public.</tspan></text>
+
+  <!-- dek -->
+  <text x="96" y="356" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#6b6358">Every talk, lecture, podcast, panel, and piece of testimony the people</text>
+  <text x="96" y="394" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#6b6358">building Anthropic have given in the open &#8212; indexed in one place.</text>
+
+  <!-- stats -->
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#2f2a24">
+    <text x="96" y="470" font-size="40" font-weight="600">288</text>
+    <text x="172" y="470" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="1.6" fill="#8c8475" font-weight="600">ENTRIES</text>
+    <text x="306" y="470" font-size="40" font-weight="600">185</text>
+    <text x="380" y="470" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="1.6" fill="#8c8475" font-weight="600">TALKS</text>
+    <text x="490" y="470" font-size="40" font-weight="600">63</text>
+    <text x="540" y="470" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="1.6" fill="#8c8475" font-weight="600">VOICES</text>
+  </g>
+
+  <!-- view tabs -->
+  <g font-family="Helvetica, Arial, sans-serif" font-size="20">
+    <text x="96" y="556" fill="#2f2a24" font-weight="600">Talks</text>
+    <text x="166" y="556" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#974a30" font-weight="700">185</text>
+    <rect x="96" y="572" width="98" height="3" fill="#a8502f"/>
+    <text x="232" y="556" fill="#8c8475" font-weight="500">Events &amp; Webinars</text>
+    <text x="430" y="556" font-size="14" fill="#a89f90" font-weight="700">78</text>
+    <text x="486" y="556" fill="#8c8475" font-weight="500">Explainers</text>
+    <text x="612" y="556" font-size="14" fill="#a89f90" font-weight="700">25</text>
+  </g>
+
+  <!-- type dots motif -->
+  <g>
+    <circle cx="1086" cy="300" r="9" fill="#b5562f"/>
+    <circle cx="1124" cy="300" r="9" fill="#8a5a86"/>
+    <circle cx="1162" cy="300" r="9" fill="#4f7d79"/>
+    <circle cx="1086" cy="338" r="9" fill="#6f8a52"/>
+    <circle cx="1124" cy="338" r="9" fill="#9a8044"/>
+    <circle cx="1162" cy="338" r="9" fill="#5a6f8f"/>
+  </g>
+</svg>
