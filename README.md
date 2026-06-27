@@ -1,4 +1,4 @@
-# Anthropic in Public
+# Anthropic Talks in Public 
 
 > An independent, chronological archive of the public talks, lectures, podcasts, panels, testimony, and essays given by the people building Anthropic — from the company's founding in 2021 to today.
 
