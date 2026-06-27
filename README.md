@@ -4,6 +4,9 @@
 
 ![Anthropic in Public — a talks archive](docs/preview.svg)
 
+> [!NOTE]
+> **An open, non-commercial project, made for learning.** It is **not affiliated with, endorsed by, or sponsored by Anthropic**. "Anthropic" and "Claude" are trademarks of Anthropic PBC. Every entry links to publicly available third-party content owned by its respective creators and hosts.
+
 A single-page, **zero-dependency** static site. No framework, no build step — just an HTML file and two data files. Every entry links to its original source.
 
 ---
