@@ -13,13 +13,13 @@ A single-page, **zero-dependency** static site. No framework, no build step — 
 
 ## What's inside
 
-**291 catalogued appearances** across three views:
+**292 catalogued appearances** across three views:
 
 | View | Count | What it is |
 |------|-------|------------|
 | **Talks** | 188 | Keynotes, podcasts, interviews, lectures, panels, firesides, testimony, essays, and demos by named team members |
 | **Events & Webinars** | 78 | Official Anthropic events (AWS Summits, Builder Summits, Google Cloud Next, The Briefing) and webinars |
-| **Explainers** | 25 | Official research/product explainer videos from Anthropic's YouTube channel |
+| **Explainers** | 26 | Official research/product explainer videos from Anthropic's YouTube channel |
 
 Spanning **2021–2026** and **60+ distinct voices** — Dario & Daniela Amodei, Jack Clark, Jared Kaplan, Chris Olah, Amanda Askell, the interpretability and alignment teams, the Claude Code team, and more.
 
@@ -30,7 +30,7 @@ Spanning **2021–2026** and **60+ distinct voices** — Dario & Daniela Amodei,
 - **Live search** (press <kbd>/</kbd>) across titles, people, and venues.
 - **Faceted filtering** — by format (keynote, podcast, lecture, …) and by speaker.
 - **Newest / oldest** sort, grouped along a year-by-year timeline.
-- **Every link verified** — all 291 sources health-checked; entries open in a new tab.
+- **Every link verified** — all 292 sources health-checked; entries open in a new tab.
 - **Responsive** — genuinely re-laid-out for mobile, not just shrunk.
 - **No tracking, no dependencies, no build.**
 
