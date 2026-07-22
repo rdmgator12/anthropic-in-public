@@ -96,6 +96,18 @@ Two dependency-free GitHub Actions keep the archive honest:
 
 Run either locally: `node scripts/validate-data.mjs` · `node scripts/check-links.mjs`.
 
+## Finding new official uploads
+
+`scripts/find-new-official.mjs` lists videos on Anthropic's official YouTube channel(s) that aren't in the archive yet — the exhaustive, repeatable version of a manual sweep. It reads the channel's **uploads playlist** (not keyword search), so it can't miss one. It needs a Google API key with the **YouTube Data API v3** enabled, and it only *surfaces* candidates — you still decide explainer vs event vs skip and write the description.
+
+```bash
+export YOUTUBE_API_KEY=…
+node scripts/find-new-official.mjs --since 2026-06-01             # what's new since a date
+node scripts/find-new-official.mjs --since 2026-06-01 --skeleton  # ready-to-paste data objects
+```
+
+Sweeps `@anthropic-ai` and `@claude` by default; override with `--handle` or `--channel-id`.
+
 ## Sources & verification
 
 Every entry was compiled from public sources and links to a primary one — a recording, transcript, podcast page, conference listing, or official document. Links were verified to resolve, and ambiguous or low-confidence items were dropped rather than guessed.
